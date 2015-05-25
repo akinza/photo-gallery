@@ -58,7 +58,7 @@ function getAlbums(){
 
 function getEachAlbum(albumId){
   FB.api(
-      albumId,
+      albumId+"/photos",
       {access_token: access_token},
       function (response) {
         if (response && !response.error) {
@@ -66,7 +66,7 @@ function getEachAlbum(albumId){
           console.log("data of Album ",albumId, response);
           var c = document.getElementById('photo-container');
           c.innerHTML = "";
-          // populate(response);
+          populate(response);
         }else{
           console.log("albums :err", response);
         }
@@ -87,8 +87,9 @@ function login(){
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
       testAPI();
-      // getAlbums();
-      getPhotos();
+      getAlbums();
+
+      //getPhotos();
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
       document.getElementById('status').innerHTML = 'Please log ' +
@@ -106,7 +107,7 @@ function populateAlbums(response){
 
   _.each(response.data, function(obj){
     var button = document.createElement("button");
-    button.className = "btn btn-info pull-left";
+    button.className = "btn btn-info pull-left  margin-left-20";
     button.dataset["id"] = obj.id;
     button.innerHTML = obj.name + "("+obj.count+")";
     var c = document.getElementById('album-container');
@@ -114,6 +115,18 @@ function populateAlbums(response){
     $(button).unbind().bind("click", function(loadAlbum){
       var album_id = loadAlbum.currentTarget.getAttribute("data-id");
       getEachAlbum(album_id);
+    });
+        var link = document.createElement("button");
+    link.className = "btn btn-block btn-default";
+    link.dataset["next"] = response.paging.next;
+    link.innerHTML = "Next";
+    var pagingBlock = document.getElementById("album-pagination");
+    pagingBlock.height = "100";
+    pagingBlock.innerHTML = "";
+    pagingBlock.appendChild(link);
+    $(link).bind("click", function(loadNextPageEvent){
+      var nextLink = loadNextPageEvent.currentTarget.getAttribute("data-next");
+      loadNextPageAlbums(nextLink);
     });
   });
 }
@@ -134,7 +147,7 @@ function populate(response) {
       var item = document.createElement("div");
       item.className = "item";
       var image = document.createElement("img");
-      image.src = obj.source;
+      image.src = obj.images[obj.images.length-1].source;
       image.width = "250";
       item.appendChild(image);
       // item.html = "Hello";
@@ -172,6 +185,14 @@ function loadNextPage(next){
     url:next,
     success: function(response){
       populate(response);
+    }
+  });
+}
+function loadNextPageAlbums(next){
+  $.ajax({
+    url:next,
+    success: function(response){
+      populateAlbums(response);
     }
   });
 }
