@@ -29,7 +29,7 @@
           xfbml      : true,
           version    : 'v2.3'
         });
-        login();
+        // login();
       };
 
       (function(d, s, id){
@@ -93,7 +93,7 @@
             <a class="navbar-brand" href="#">F8 Image Gallery</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
+            <!-- <ul class="nav navbar-nav">
               <li class="active"><a href="#">Home</a></li>
               <li><a href="#about">About</a></li>
               <li><a href="#contact">Contact</a></li>
@@ -109,34 +109,36 @@
                   <li><a href="#">One more separated link</a></li>
                 </ul>
               </li>
-            </ul>
-            <ul class="nav navbar-nav pull-right">
+            </ul> -->
+            <ul class="nav navbar-nav pull-right" id="user-nav">
               <li><a href="#me" id="user_name"></a></li>
-              <li><a href="#logout" id="user_logout">logout</a></li>
+              <!-- <li id="user_logout"><a href="#logout">logout</a></li> -->
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </nav>
     </header>
+
     <div class="container"  style="margin:50px auto;display:table;">
+      <div class="login-container text-center" id="fb-login">
+        <img src="images/fb_login.png">
+      </div>
       <div id="status" class="text-center"></div>
       <div id="album-container" class="js-masonry"></div>
-          </div>
-<div class="container"  style="margin:50px auto;display:table;">
+    </div>
+    <div class="container"  style="margin:50px auto;display:table;">
       <div id="album-pagination"></div>
     </div>
-<div class="container"  style="margin:50px auto;display:table;">
+    <div class="container"  style="margin:50px auto;display:table;">
       <div id="photo-container" class="js-masonry"></div>
       <div id="pagination"></div>
     </div>
     <footer class="footer">
-
       <div class="container">
         <p class="text-center">F8 Image Gallery &copy; Copyright 2015</p>
       </div>
-
     </footer>
-
+    <div class="v-image-container-main" id="imageViewer"></div>
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>

@@ -1,15 +1,7 @@
-$(document).ready(function(){
-  $("#user_logout").unbind().bind("click", function(eventLogout){
-    FB.logout(function(response) {
-      // user is now logged out
-      console.log("Logout::", response);
-      top.location.reload();
-    });
-  });
-});
 
-function testAPI() {
+function onLoginSuccess() {
   console.log('Welcome!  Fetching your information.... ');
+  $("#fb-login").hide();
   FB.api('/me', function(response) {
     user_id = response.id;
     access_token = response.access_token;
@@ -17,9 +9,32 @@ function testAPI() {
     console.log('Successful login for: ' + response.name);
     document.getElementById('user_name').innerHTML = response.name;
     document.getElementById('status').innerHTML ='Thanks for logging in, ' + response.name + '!';
+    var logoutContainer = document.createElement("li");
+    var logoutLink = document.createElement("a");
+    logoutLink.className = "";
+    logoutLink.href = "#";
+    logoutLink.id = "user_logout";
+    logoutLink.innerHTML = "Logout";
+    logoutContainer.appendChild(logoutLink);
+    document.getElementById('user-nav').appendChild(logoutContainer);
+    $("#user_logout").unbind().bind("click", function(logoutEvent){
+      logout(logoutEvent);
+    });
   });
 }
 
+function logout(logoutEvent){
+  FB.logout(function(response) {
+    // user is now logged out
+    console.log("Logout::", response);
+    // document.getElementById('status').innerHTML = "You are successfully signed out!";
+    document.getElementById('album-container').innerHTML ="";
+    document.getElementById('album-pagination').innerHTML ="";
+    document.getElementById('photo-container').innerHTML ="";
+    document.getElementById('pagination').innerHTML ="";
+    top.location.reload();
+  });
+}
 
 function getPhotos(){
   FB.api(
@@ -75,7 +90,6 @@ function getEachAlbum(albumId){
   );
 }
 
-
 function login(){
   FB.login(function(response){
     console.log('Login');
@@ -86,7 +100,7 @@ function login(){
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
-      testAPI();
+      onLoginSuccess();
       getAlbums();
 
       //getPhotos();
@@ -148,11 +162,16 @@ function populate(response) {
       item.className = "item";
       var image = document.createElement("img");
       image.src = obj.images[obj.images.length-1].source;
+      item.dataset["source"] = obj.images[0].source;
       image.width = "250";
       item.appendChild(image);
       // item.html = "Hello";
       // item.height = Math.ceil(Math.random()*100) +"px";
       c.appendChild(item);
+      $(item).unbind().bind("click",  function(eventZoomImage){
+        var source = eventZoomImage.currentTarget.getAttribute("data-source");
+        loadImageViewer(source);
+      });
     });
     var container = document.querySelector('#photo-container');
     var msnry = new Masonry( container, {
@@ -178,8 +197,10 @@ function populate(response) {
       var nextLink = loadNextPageEvent.currentTarget.getAttribute("data-next");
       loadNextPage(nextLink);
     });
+
   // });
 }
+
 function loadNextPage(next){
   $.ajax({
     url:next,
@@ -188,6 +209,7 @@ function loadNextPage(next){
     }
   });
 }
+
 function loadNextPageAlbums(next){
   $.ajax({
     url:next,
@@ -196,3 +218,38 @@ function loadNextPageAlbums(next){
     }
   });
 }
+
+function loadImageViewer(source){
+  //  fetch container
+  console.log("loadImageViewer :: ", source);
+  var imageViewerContainer = document.getElementById('imageViewer');
+  imageViewerContainer.innerHTML = "";
+  var viewer = document.createElement("div");
+  viewer.className = "v-image-container-inner";
+  var image = document.createElement("img");
+  image.src = source;
+  var closeButton = document.createElement("div");
+  closeButton.className = "close";
+  var close = document.createElement("span");
+  close.className = "glyphicon glyphicon-remove";
+  closeButton.appendChild(close);
+
+  viewer.appendChild(image);
+  viewer.appendChild(closeButton);
+  imageViewerContainer.appendChild(viewer);
+  imagesLoaded(imageViewerContainer, function(){
+    $(imageViewerContainer).show(100);
+  });
+  $(closeButton).click(function(){
+    $(imageViewerContainer).hide(100);
+  });
+  // create image
+  // append to container
+  // show container
+}
+
+$(document).ready(function(){
+  $("#fb-login").unbind().bind("click", function (loginEvent) {
+    login();
+  });
+});
