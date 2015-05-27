@@ -7,8 +7,9 @@
 
 /* Space out content a bit */
 body {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 0;
+  margin: 0;
+  background: rgb(209, 224, 232);
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */

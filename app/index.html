@@ -30,6 +30,9 @@
           version    : 'v2.3'
         });
         // login();
+        FB.getLoginStatus(function(response) {
+           statusChangeCallback(response);
+         });
       };
 
       (function(d, s, id){
@@ -90,7 +93,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">F8 Image Gallery</a>
+            <a class="navbar-brand" href="/">F8 Image Gallery</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <!-- <ul class="nav navbar-nav">
@@ -111,6 +114,7 @@
               </li>
             </ul> -->
             <ul class="nav navbar-nav pull-right" id="user-nav">
+              <li><a href="#me" id="userProfilePicture"></a></li>
               <li><a href="#me" id="user_name"></a></li>
               <!-- <li id="user_logout"><a href="#logout">logout</a></li> -->
             </ul>
@@ -119,21 +123,27 @@
       </nav>
     </header>
 
-    <div class="container"  style="margin:50px auto;display:table;">
+    <div class="container" id="fb-login-container" style="margin:50px auto;display:table;">
       <div class="login-container text-center" id="fb-login">
-        <img src="images/fb_login.png">
+        <!-- <img src="images/fb_login.png"> -->
       </div>
       <div id="status" class="text-center"></div>
-      <div id="album-container" class="js-masonry"></div>
+
     </div>
-    <div class="container"  style="margin:50px auto;display:table;">
-      <div id="album-pagination"></div>
+    <div class="" data-spy="affix" data-offset-top="60" data-offset-bottom="200"  style="display:box; position:fixed;">
+      <div class="list-group" style="margin-bottom:0;"><a class="list-group-item margin-left-20"><b>Albums</b></a></div>
+      <div id="album-container" class="js-masonry list-group"></div>
+      <div id="album-pagination" class=""></div>
     </div>
-    <div class="container"  style="margin:50px auto;display:table;">
-      <div id="photo-container" class="js-masonry"></div>
-      <div id="pagination"></div>
+    <div class="container"  style="margin:50px auto;display:block;">
+      <div class="row">
+        <div id="photo-container" class="js-masonry col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
+      </div>
+      <div class="row">
+        <div id="pagination" class="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
+      </div>
     </div>
-    <footer class="footer">
+    <footer class="footer" style="background:#fff;margin-bottom:0;">
       <div class="container">
         <p class="text-center">F8 Image Gallery &copy; Copyright 2015</p>
       </div>
@@ -174,6 +184,16 @@
 
         <script src="scripts/underscore.js"></script>
         <!-- endbuild -->
+
+        <script type="text/template" id="tpl-album-item">
+          <!-- <div class="list-group"> -->
+            <!-- <a href="#" class="list-group-item active">Cras justo odio</a> -->
+            <!-- <a href="#" class="list-group-item">Dapibus ac facilisis in</a> -->
+            <!-- <a href="#" class="list-group-item">Morbi leo risus</a> -->
+            <!-- <a href="#" class="list-group-item">Porta ac consectetur ac</a> -->
+            <a href="#" class="list-group-item" data-id="<%=id%>"><%=name%> (<%=count%>)</a>
+          <!-- </div> -->
+        </script>
 
         <!-- build:js({app,.tmp}) scripts/main.js -->
         <script src="scripts/main.js"></script>
