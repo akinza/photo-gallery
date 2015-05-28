@@ -123,31 +123,39 @@
       </nav>
     </header>
 
-    <div class="container" id="fb-login-container" style="margin:50px auto;display:table;">
-      <div class="login-container text-center" id="fb-login">
-        <!-- <img src="images/fb_login.png"> -->
-      </div>
-      <div id="status" class="text-center"></div>
 
-    </div>
     <div class="" data-spy="affix" data-offset-top="60" data-offset-bottom="200"  style="display:box; position:fixed;">
-      <div class="list-group" style="margin-bottom:0;"><a class="list-group-item margin-left-20"><b>Albums</b></a></div>
+      <div id="albumListHeading" class="list-group" style="margin:50px 0 0 0;display: none;">
+        <a class="list-group-item margin-left-20"><b>Albums</b></a>
+      </div>
       <div id="album-container" class="js-masonry list-group"></div>
       <div id="album-pagination" class=""></div>
     </div>
-    <div class="container"  style="margin:50px auto;display:block;">
+    <div class="container"  style="margin:50px auto 150px;display:block;">
       <div class="row">
-        <div id="photo-container" class="js-masonry col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="fb-login-container">
+          <div class="login-container text-center" id="fb-login">
+            <!-- <img src="images/fb_login.png"> -->
+          </div>
+          <!-- <div id="status" class="text-center"></div> -->
+
+        </div>
+      </div>
+      <div class="row">
+        <div id="photo-container" class="js-masonry col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:40px;"></div>
       </div>
       <div class="row">
         <div id="pagination" class="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
       </div>
     </div>
-    <footer class="footer" style="background:#fff;margin-bottom:0;">
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+      <footer class="footer" style="background:#fff;margin-bottom:0;">
       <div class="container">
-        <p class="text-center">F8 Image Gallery &copy; Copyright 2015</p>
+        <p class="text-center">F8 Photo Gallery &copy; Copyright 2015 | <a href="https://www.fb.com/1745217960" target="_blank">@akinza</p>
       </div>
     </footer>
+    </nav>
+
     <div class="v-image-container-main" id="imageViewer"></div>
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->

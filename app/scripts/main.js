@@ -13,7 +13,7 @@ function onLoginSuccess() {
     var profilePic = document.createElement("img");
     profilePic.src = "http://graph.facebook.com/"+user_id+"/picture?height=16&width=16";
     document.getElementById('userProfilePicture').appendChild(profilePic);
-    document.getElementById('status').innerHTML ='Thanks for logging in, ' + response.name + '!';
+    // document.getElementById('status').innerHTML ='Thanks for logging in, ' + response.name + '!';
     var logoutContainer = document.createElement("li");
     var logoutLink = document.createElement("a");
     logoutLink.className = "";
@@ -22,6 +22,7 @@ function onLoginSuccess() {
     logoutLink.innerHTML = "Logout";
     logoutContainer.appendChild(logoutLink);
     document.getElementById('user-nav').appendChild(logoutContainer);
+
     $("#user_logout").unbind().bind("click", function(logoutEvent){
       logout(logoutEvent);
     });
@@ -37,6 +38,7 @@ function logout(logoutEvent){
     document.getElementById('album-pagination').innerHTML ="";
     document.getElementById('photo-container').innerHTML ="";
     document.getElementById('pagination').innerHTML ="";
+     $("#albumListHeading").hide();
     top.location.reload();
   });
 }
@@ -121,7 +123,7 @@ function login(){
 }
 
 function populateAlbums(response){
-
+    $("#albumListHeading").show();
   _.each(response.data, function(obj){
     var button = document.createElement("a");
     // button.className = " btn btn-info pull-left  margin-left-20";
