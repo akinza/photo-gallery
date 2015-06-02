@@ -186,23 +186,21 @@ function populate(response) {
     imagesLoaded( container, function() {
 
       msnry.layout();
-
+      if(_.has(response.paging, "next")){
+        var link = document.createElement("button");
+        link.className = "btn btn-block btn-default";
+        link.dataset["next"] = response.paging.next;
+        link.innerHTML = "Load more images";
+        var pagingBlock = document.getElementById("pagination");
+        pagingBlock.height = "100";
+        pagingBlock.innerHTML = "";
+        pagingBlock.appendChild(link);
+        $(link).bind("click", function(loadNextPageEvent){
+          var nextLink = loadNextPageEvent.currentTarget.getAttribute("data-next");
+          loadNextPage(nextLink);
+        });
+      }
     });
-    if(_.has(response.paging, "next")){
-      var link = document.createElement("button");
-      link.className = "btn btn-block btn-default";
-      link.dataset["next"] = response.paging.next;
-      link.innerHTML = "Load more images";
-      var pagingBlock = document.getElementById("pagination");
-      pagingBlock.height = "100";
-      pagingBlock.innerHTML = "";
-      pagingBlock.appendChild(link);
-      $(link).bind("click", function(loadNextPageEvent){
-        var nextLink = loadNextPageEvent.currentTarget.getAttribute("data-next");
-        loadNextPage(nextLink);
-      });
-    }
-
 }
 
 function loadNextPage(next){
