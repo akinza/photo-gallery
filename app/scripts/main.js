@@ -138,6 +138,7 @@ function populateAlbums(response){
     });
   });
   if(_.has(response.paging, "next")){
+    console.log("Has pagination");
     var link = document.createElement("button");
     link.className = "btn btn-block btn-default";
     link.dataset["next"] = response.paging.next;
@@ -173,10 +174,40 @@ function populatePhoto(response) {
       cDateBlock.className = "created-time";
       cDateBlock.innerHTML = new Date(obj.created_time).toDateString();
 
+      // Creating Links
+      var likes = document.createElement("div");
+      likes.className = "likes";
+      var likeCount = 0, commentCount = 0;
+      if(_.has(obj, "likes")){
+        likeCount = obj.likes.data.length;
+      }
+      if(_.has(obj, "comments")){
+        commentCount = obj.comments.data.length;
+      }
+      likes.innerHTML = "<span class='glyphicon glyphicon-heart'></span> "
+                        + likeCount+ " "+
+                        "<span class='glyphicon glyphicon-comment'></span> "
+                        + commentCount;
 
       // Appending Childrens to Item
       item.appendChild(image);
       item.appendChild(cDateBlock);
+      item.appendChild(likes);
+
+
+      if(commentCount){
+        var commentsBlock =document.createElement("div");
+        commentsBlock.className = "comment-block";
+        _.each(obj.comments.data, function(comment){
+          var commentDiv = document.createElement("div");
+          commentDiv.className = "comment";
+          commentDiv.innerHTML = "<img width='24' height='24' src='http://graph.facebook.com/"
+            +comment.from.id
+            +"/picture?height=24&width=24'>"
+            +"<strong>"+comment.from.name+"</strong>" +" : " +comment.message;
+            item.appendChild(commentDiv);
+        });
+      }
       // Appending Item to Container
       c.appendChild(item);
       $(item).unbind().bind("click",  function(eventZoomImage){
