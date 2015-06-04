@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>F8 Photo Gallery</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+    <!-- <meta name="viewport" content="width=device-width"> -->
     <link rel="shortcut icon" href="/favicon.ico">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
@@ -18,7 +18,6 @@
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="bower_components/modernizr/modernizr.js"></script>
     <!-- endbuild -->
-
   </head>
   <body>
     <script>
@@ -29,12 +28,10 @@
           xfbml      : true,
           version    : 'v2.3'
         });
-        // login();
         FB.getLoginStatus(function(response) {
            statusChangeCallback(response);
          });
       };
-
       (function(d, s, id){
          var js, fjs = d.getElementsByTagName(s)[0];
          if (d.getElementById(id)) {return;}
@@ -42,48 +39,11 @@
          js.src = "//connect.facebook.net/en_US/sdk.js";
          fjs.parentNode.insertBefore(js, fjs);
        }(document, 'script', 'facebook-jssdk'));
-
-      //  function checkLoginState() {
-      //    FB.getLoginStatus(function(response) {
-      //      statusChangeCallback(response);
-      //    });
-      //  }
-       // This is called with the results from from FB.getLoginStatus().
-      //  function statusChangeCallback(response) {
-      //    console.log('statusChangeCallback');
-      //    console.log(response);
-      //    // The response object is returned with a status field that lets the
-      //    // app know the current login status of the person.
-      //    // Full docs on the response object can be found in the documentation
-      //    // for FB.getLoginStatus().
-      //    if (response.status === 'connected') {
-      //      // Logged into your app and Facebook.
-      //      testAPI();
-      //    } else if (response.status === 'not_authorized') {
-      //      // The person is logged into Facebook, but not your app.
-      //      document.getElementById('status').innerHTML = 'Please log ' +
-      //        'into this app.';
-      //    } else {
-      //      // The person is not logged into Facebook, so we're not sure if
-      //      // they are logged into this app or not.
-      //      document.getElementById('status').innerHTML = 'Please log ' +
-      //        'into Facebook.';
-      //    }
-      //  }
-
-      //  FB.getLoginStatus(function(response) {
-      //     statusChangeCallback(response);
-      //   });
-
-        // Here we run a very simple test of the Graph API after login is
-        // successful.  See statusChangeCallback() for when this call is made.
-
-
     </script>
     <!--[if lt IE 10]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <header>
+    <header class="header">
       <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
           <div class="navbar-header">
@@ -96,66 +56,47 @@
             <a class="navbar-brand" href="/">F8 Photo Gallery</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
-            <!-- <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li class="divider"></li>
-                  <li class="dropdown-header">Nav header</li>
-                  <li><a href="#">Separated link</a></li>
-                  <li><a href="#">One more separated link</a></li>
-                </ul>
-              </li>
-            </ul> -->
             <ul class="nav navbar-nav pull-right" id="user-nav">
               <li><a href="#me" id="userProfilePicture"></a></li>
               <li><a href="#me" id="user_name"></a></li>
-              <!-- <li id="user_logout"><a href="#logout">logout</a></li> -->
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </nav>
     </header>
-
-
-    <div class="" data-spy="affix" data-offset-top="60" data-offset-bottom="200"  style="display:box; position:fixed;">
-      <div id="albumListHeading" class="list-group" style="margin:50px 0 0 0;display: none;">
-        <a class="list-group-item margin-left-20"><b>Albums</b></a>
+    <div class="row no-margin">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="fb-login-container">
+        <div class="login-container text-center" id="fb-login"></div>
       </div>
-      <div id="album-container" class="js-masonry list-group"></div>
-      <div id="album-pagination" class=""></div>
     </div>
-    <div class="container"  style="margin:50px auto 150px;display:block;">
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="fb-login-container">
-          <div class="login-container text-center" id="fb-login">
-            <!-- <img src="images/fb_login.png"> -->
+    <div class="row no-margin">
+      <section class="sidebar col-lg-2 col-md-3 col-sm-4 col-xs-4">
+        <div class="row  no-margin">
+          <div id="albumListHeading" class="list-group col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin:10px 0 5px 0; display: none;">
+            <a class="list-group-item margin-left-20"><b>Albums</b></a>
           </div>
-          <!-- <div id="status" class="text-center"></div> -->
-
         </div>
-      </div>
-      <div class="row">
-        <div id="photo-container" class="js-masonry col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:40px;"></div>
-      </div>
-      <div class="row">
-        <div id="pagination" class="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
-      </div>
+        <div class="row no-margin">
+          <div id="album-container" class="list-group col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
+        </div>
+        <div class="row no-margin">
+          <div id="album-pagination" class="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
+        </div>
+      </section>
+      <section class="content col-lg-10 col-md-9 col-sm-8 col-xs-8">
+        <div class="row no-margin">
+          <div id="photo-container" class="js-masonry col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
+        </div>
+        <div class="row no-margin">
+          <div id="pagination" class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding:25px;"></div>
+        </div>
+      </section>
     </div>
-    <nav class="navbar navbar-default navbar-fixed-bottom">
-      <footer class="footer" style="background:#fff;margin-bottom:0;">
+    <footer class="footer">
       <div class="container">
         <p class="text-center">F8 Photo Gallery &copy; Copyright 2015 | <a href="https://www.fb.com/1745217960" target="_blank">@akinza</a></p>
       </div>
     </footer>
-    </nav>
-
     <div class="v-image-container-main" id="imageViewer"></div>
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -165,7 +106,6 @@
     <script src="bower_components/web-animations-js/web-animations.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
-
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
       (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
@@ -175,39 +115,36 @@
       r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
       ga('create','UA-XXXXX-X');ga('send','pageview');
     </script>
+    <!-- build:js(.) scripts/plugins.js -->
+    <script src="bower_components/bootstrap/js/affix.js"></script>
+    <script src="bower_components/bootstrap/js/alert.js"></script>
+    <script src="bower_components/bootstrap/js/dropdown.js"></script>
+    <script src="bower_components/bootstrap/js/tooltip.js"></script>
+    <script src="bower_components/bootstrap/js/modal.js"></script>
+    <script src="bower_components/bootstrap/js/transition.js"></script>
+    <script src="bower_components/bootstrap/js/button.js"></script>
+    <script src="bower_components/bootstrap/js/popover.js"></script>
+    <script src="bower_components/bootstrap/js/carousel.js"></script>
+    <script src="bower_components/bootstrap/js/scrollspy.js"></script>
+    <script src="bower_components/bootstrap/js/collapse.js"></script>
+    <script src="bower_components/bootstrap/js/tab.js"></script>
 
-        <!-- build:js(.) scripts/plugins.js -->
-        <script src="bower_components/bootstrap/js/affix.js"></script>
-        <script src="bower_components/bootstrap/js/alert.js"></script>
-        <script src="bower_components/bootstrap/js/dropdown.js"></script>
-        <script src="bower_components/bootstrap/js/tooltip.js"></script>
-        <script src="bower_components/bootstrap/js/modal.js"></script>
-        <script src="bower_components/bootstrap/js/transition.js"></script>
-        <script src="bower_components/bootstrap/js/button.js"></script>
-        <script src="bower_components/bootstrap/js/popover.js"></script>
-        <script src="bower_components/bootstrap/js/carousel.js"></script>
-        <script src="bower_components/bootstrap/js/scrollspy.js"></script>
-        <script src="bower_components/bootstrap/js/collapse.js"></script>
-        <script src="bower_components/bootstrap/js/tab.js"></script>
+    <script src="bower_components/masonry/dist/masonry.pkgd.min.js"></script>
+    <script src="bower_components/imagesloaded/imagesloaded.pkgd.min.js"></script>
 
-        <script src="bower_components/masonry/dist/masonry.pkgd.min.js"></script>
-        <script src="bower_components/imagesloaded/imagesloaded.pkgd.min.js"></script>
-
-        <script src="scripts/underscore.js"></script>
-        <!-- endbuild -->
-
-        <script type="text/template" id="tpl-album-item">
-          <!-- <div class="list-group"> -->
-            <!-- <a href="#" class="list-group-item active">Cras justo odio</a> -->
-            <!-- <a href="#" class="list-group-item">Dapibus ac facilisis in</a> -->
-            <!-- <a href="#" class="list-group-item">Morbi leo risus</a> -->
-            <!-- <a href="#" class="list-group-item">Porta ac consectetur ac</a> -->
-            <a href="#" class="list-group-item" data-id="<%=id%>"><%=name%> (<%=count%>)</a>
-          <!-- </div> -->
-        </script>
-
-        <!-- build:js({app,.tmp}) scripts/main.js -->
-        <script src="scripts/main.js"></script>
-        <!-- endbuild -->
+    <script src="scripts/underscore.js"></script>
+    <!-- endbuild -->
+    <script type="text/template" id="tpl-album-item">
+      <!-- <div class="list-group"> -->
+        <!-- <a href="#" class="list-group-item active">Cras justo odio</a> -->
+        <!-- <a href="#" class="list-group-item">Dapibus ac facilisis in</a> -->
+        <!-- <a href="#" class="list-group-item">Morbi leo risus</a> -->
+        <!-- <a href="#" class="list-group-item">Porta ac consectetur ac</a> -->
+        <a href="#" class="list-group-item" data-id="<%=id%>"><%=name%> (<%=count%>)</a>
+      <!-- </div> -->
+    </script>
+    <!-- build:js({app,.tmp}) scripts/main.js -->
+    <script src="scripts/main.js"></script>
+    <!-- endbuild -->
 </body>
 </html>

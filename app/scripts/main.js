@@ -1,4 +1,3 @@
-
 function onLoginSuccess() {
   console.log('Welcome!  Fetching your information.... ');
   $("#fb-login").hide();
@@ -51,7 +50,7 @@ function getPhotos(){
         if (response && !response.error) {
           /* handle the result */
           console.log("photos data", response);
-          populate(response);
+          populatePhoto(response);
         }else{
           console.log("photos :err", response);
         }
@@ -68,7 +67,7 @@ function getAlbums(){
         if (response && !response.error) {
           /* handle the result */
           console.log("albums data", response);
-          // populate(response);
+          // populatePhoto(response);
           populateAlbums(response);
         }else{
           console.log("albums :err", response);
@@ -88,7 +87,7 @@ function getEachAlbum(albumId){
           console.log("data of Album ",albumId, response);
           var c = document.getElementById('photo-container');
           c.innerHTML = "";
-          populate(response);
+          populatePhoto(response);
         }else{
           console.log("albums :err", response);
         }
@@ -111,8 +110,7 @@ function login(){
 
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into this app.';
+      // document.getElementById('status').innerHTML = 'Please log into this app.';
     } else {
       // The person is not logged into Facebook, so we're not sure if
       // they are logged into this app or not.
@@ -138,38 +136,48 @@ function populateAlbums(response){
       var album_id = loadAlbum.currentTarget.getAttribute("data-id");
       getEachAlbum(album_id);
     });
-    if(_.has(response.paging, "next")){
-      var link = document.createElement("button");
-      link.className = "btn btn-block btn-default";
-      link.dataset["next"] = response.paging.next;
-      link.innerHTML = "Next";
-      var pagingBlock = document.getElementById("album-pagination");
-      pagingBlock.height = "100";
-      pagingBlock.innerHTML = "";
-      pagingBlock.appendChild(link);
-      $(link).bind("click", function(loadNextPageEvent){
-        var nextLink = loadNextPageEvent.currentTarget.getAttribute("data-next");
-        loadNextPageAlbums(nextLink);
-      });
-    }
   });
+  if(_.has(response.paging, "next")){
+    var link = document.createElement("button");
+    link.className = "btn btn-block btn-default";
+    link.dataset["next"] = response.paging.next;
+    link.innerHTML = "Next";
+    var pagingBlock = document.getElementById("album-pagination");
+    pagingBlock.height = "100";
+    pagingBlock.innerHTML = "";
+    pagingBlock.appendChild(link);
+    $(link).bind("click", function(loadNextPageEvent){
+      var nextLink = loadNextPageEvent.currentTarget.getAttribute("data-next");
+      loadNextPageAlbums(nextLink);
+    });
+  }
 }
 
-function populate(response) {
-  // $(document).ready(function(){
+function populatePhoto(response) {
     var c = document.getElementById('photo-container');
     var pagingBlock = document.getElementById("pagination");
     pagingBlock.innerHTML = "";
     _.each(response.data, function(obj){
+      // Creating Item
       var item = document.createElement("div");
       item.className = "item";
+
+      // Creating Image
       var image = document.createElement("img");
       image.src = obj.images[obj.images.length-1].source;
       item.dataset["source"] = obj.images[0].source;
-      image.width = "250";
+      image.width = "230";
+
+      // Creating Create Date
+      var cDateBlock = document.createElement("div");
+      cDateBlock.className = "created-time";
+      cDateBlock.innerHTML = new Date(obj.created_time).toDateString();
+
+
+      // Appending Childrens to Item
       item.appendChild(image);
-      // item.html = "Hello";
-      // item.height = Math.ceil(Math.random()*100) +"px";
+      item.appendChild(cDateBlock);
+      // Appending Item to Container
       c.appendChild(item);
       $(item).unbind().bind("click",  function(eventZoomImage){
         var source = eventZoomImage.currentTarget.getAttribute("data-source");
@@ -180,7 +188,7 @@ function populate(response) {
     var msnry = new Masonry( container, {
       // options...
       itemSelector: '.item',
-      columnWidth: 270
+      columnWidth: 250
     });
     // layout Masonry again after all images have loaded
     imagesLoaded( container, function() {
@@ -188,7 +196,7 @@ function populate(response) {
       msnry.layout();
       if(_.has(response.paging, "next")){
         var link = document.createElement("button");
-        link.className = "btn btn-block btn-default";
+        link.className = "btn btn-block btn-primary";
         link.dataset["next"] = response.paging.next;
         link.innerHTML = "Load more images";
         var pagingBlock = document.getElementById("pagination");
@@ -207,7 +215,7 @@ function loadNextPage(next){
   $.ajax({
     url:next,
     success: function(response){
-      populate(response);
+      populatePhoto(response);
     }
   });
 }
@@ -249,32 +257,31 @@ function loadImageViewer(source){
   // append to container
   // show container
 }
- function statusChangeCallback(response) {
-   console.log('statusChangeCallback');
-   console.log(response);
-   var loginButton = document.createElement("img");
-   loginButton.src = "images/fb_login.png";
-   // The response object is returned with a status field that lets the
-   // app know the current login status of the person.
-   // Full docs on the response object can be found in the documentation
-   // for FB.getLoginStatus().
-   if (response.status === 'connected') {
-     // Logged into your app and Facebook.
-    //  testAPI();
-    onLoginSuccess();
-   } else if (response.status === 'not_authorized') {
-    //  login();
-    document.getElementById('fb-login').appendChild(loginButton);
-   } else {
-    //  login();
-    document.getElementById('fb-login').appendChild(loginButton);
-   }
+
+function statusChangeCallback(response) {
+ console.log('statusChangeCallback');
+ console.log(response);
+ var loginButton = document.createElement("img");
+ loginButton.src = "images/fb_login.png";
+ // The response object is returned with a status field that lets the
+ // app know the current login status of the person.
+ // Full docs on the response object can be found in the documentation
+ // for FB.getLoginStatus().
+ if (response.status === 'connected') {
+   // Logged into your app and Facebook.
+  //  testAPI();
+  onLoginSuccess();
+ } else if (response.status === 'not_authorized') {
+  //  login();
+  document.getElementById('fb-login').appendChild(loginButton);
+ } else {
+  //  login();
+  document.getElementById('fb-login').appendChild(loginButton);
  }
+}
 
 $(document).ready(function(){
-
   $("#fb-login").unbind().bind("click", function (loginEvent) {
     login();
   });
-
 });

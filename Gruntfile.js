@@ -80,6 +80,7 @@ module.exports = function (grunt) {
         // Change this to '0.0.0.0' to access the server from outside
         // hostname: '0.0.0.0'
         hostname: "hcdc-pc9.pune.cdac.in"
+        // hostname: "localhost"
       },
       livereload: {
         options: {

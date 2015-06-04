@@ -4,12 +4,18 @@
   color: #000;
   padding: 0.2em 0;
 }
-
+.container{
+  width: 100%;
+}
+html,body{
+  font-family: 'RobotoDraft', sans-serif !important;
+}
 /* Space out content a bit */
 body {
   padding: 0;
   margin: 0;
-  background: rgb(209, 224, 232);
+  background: rgb(100, 100, 100);
+  /*overflow: hidden;*/
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -22,7 +28,8 @@ body {
 
 /* Custom page header */
 .header {
-  border-bottom: 1px solid #e5e5e5;
+  height: 55px;
+  margin-bottom: 20px;
 }
 
 /* Make the masthead heading the same height as the navigation */
@@ -35,9 +42,11 @@ body {
 
 /* Custom page footer */
 .footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
+  margin: 0;
+  padding: 20px 0 10px;
+  /*color: #777;*/
+  /*border: none;*/
+  /*border-top: 1px solid #e5e5e5;*/
 }
 
 .container-narrow > hr {
@@ -65,17 +74,25 @@ body {
 }
 
 .item{
-width: 270px;
-padding: 10px;
-/*border: 1px solid #ddd;
-background: #eef;*/
-}
-.item img{
-  /*border: 1px solid #ADADAD;*/
+  margin: 10px;
+  width: 230px;
+  padding-bottom: 15px;
+  /*border: 1px solid #ddd;*/
+  background: #3a3a3a;
+  color: #fff;
   border-radius: 5px;
   -webkit-box-shadow:  0 1px 2px 0 rgba(0, 0, 0, 0.22);
   -moz-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.22);
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.22);
+}
+.item img{
+  /*border: 1px solid #ADADAD;*/
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  -webkit-box-shadow:  0 1px 2px 0 rgba(0, 0, 0, 0.22);
+  -moz-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.22);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.22);
+  margin-bottom: 15px;
 }
 .item img:hover{
   -webkit-box-shadow:  0 1px 2px 0 rgba(0, 0, 0, 0.42);
@@ -83,7 +100,9 @@ background: #eef;*/
   box-shadow:  0 1px 2px 0 rgba(0, 0, 0, 0.42);
   cursor: zoom-in;
 }
-
+.item div.created-time {
+  padding:0 10px;
+}
 #items{
   display: table;
   margin-top: 100px;
@@ -144,22 +163,23 @@ background: #eef;*/
 }
 .v-image-container-main{
   position: fixed;
-  top:50px;
+  top:0;
   right: 0;
   bottom:0;
   left:0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.6);
   display: none;
-  z-index: 1000;
+  z-index: 9999;
 }
 .v-image-container-inner{
   margin: 0 auto;
   width: 100%;
   height: 100%;
-  background: #000;
+  background: rgba(0, 0, 0, 0.6);
   text-align: center;
+  padding: 60px;
 }
 .v-image-container-inner img{
   height: 100%;
@@ -179,4 +199,10 @@ background: #eef;*/
 }
 .login-container{
   cursor: pointer;
+}
+.sidebar{
+  display: block;
+}
+.no-margin{
+  margin: 0;
 }
