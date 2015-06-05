@@ -10,7 +10,7 @@ function onLoginSuccess() {
     console.log('Successful login for: ' + response.name);
     document.getElementById('user_name').innerHTML = response.name;
     var profilePic = document.createElement("img");
-    profilePic.src = "http://graph.facebook.com/"+user_id+"/picture?height=16&width=16";
+    profilePic.src = "//graph.facebook.com/"+user_id+"/picture?height=16&width=16";
     document.getElementById('userProfilePicture').appendChild(profilePic);
     // document.getElementById('status').innerHTML ='Thanks for logging in, ' + response.name + '!';
     var logoutContainer = document.createElement("li");
@@ -96,6 +96,19 @@ function getEachAlbum(albumId){
   );
 }
 
+function getPhotoLikesInfo(id){
+  FB.api(
+    id+"/likes",
+    {fields : "total_count"},
+    {access_token: access_token},
+    function(response){
+      if (response && !response.error) {
+        console.log("Likes Info :: <"+id+">", response);
+      }
+    }
+  );
+}
+
 function login(){
   FB.login(function(response){
     console.log('Login');
@@ -117,25 +130,27 @@ function login(){
       document.getElementById('status').innerHTML = 'Please log ' +
         'into Facebook.';
     }
-  },{scope:"public_profile,email,user_photos"});
+  },{scope:"public_profile,email,user_photos,user_friends"});
 }
 
 function populateAlbums(response){
     $("#albumListHeading").show();
   _.each(response.data, function(obj){
-    var button = document.createElement("a");
-    // button.className = " btn btn-info pull-left  margin-left-20";
-    button.className = "list-group-item margin-left-20";
+    if(obj.privacy !== "custom"){
+      var button = document.createElement("a");
+      // button.className = " btn btn-info pull-left  margin-left-20";
+      button.className = "list-group-item margin-left-20";
 
-    button.dataset["id"] = obj.id;
-    button.innerHTML = obj.name + "("+obj.count+")";
-    button.style.cursor = "pointer";
-    var c = document.getElementById('album-container');
-    c.appendChild(button);
-    $(button).unbind().bind("click", function(loadAlbum){
-      var album_id = loadAlbum.currentTarget.getAttribute("data-id");
-      getEachAlbum(album_id);
-    });
+      button.dataset["id"] = obj.id;
+      button.innerHTML = obj.name + "("+obj.count+")";
+      button.style.cursor = "pointer";
+      var c = document.getElementById('album-container');
+      c.appendChild(button);
+      $(button).unbind().bind("click", function(loadAlbum){
+        var album_id = loadAlbum.currentTarget.getAttribute("data-id");
+        getEachAlbum(album_id);
+      });
+    }
   });
   if(_.has(response.paging, "next")){
     console.log("Has pagination");
@@ -159,6 +174,9 @@ function populatePhoto(response) {
     var pagingBlock = document.getElementById("pagination");
     pagingBlock.innerHTML = "";
     _.each(response.data, function(obj){
+      // fetch Photo Like Info
+      getPhotoLikesInfo(obj.id);
+
       // Creating Item
       var item = document.createElement("div");
       item.className = "item";
@@ -201,9 +219,9 @@ function populatePhoto(response) {
         _.each(obj.comments.data, function(comment){
           var commentDiv = document.createElement("div");
           commentDiv.className = "comment";
-          commentDiv.innerHTML = "<img width='24' height='24' src='http://graph.facebook.com/"
+          commentDiv.innerHTML = "<img width='32' height='32' src='//graph.facebook.com/"
             +comment.from.id
-            +"/picture?height=24&width=24'>"
+            +"/picture?height=32&width=32'>"
             +"<strong>"+comment.from.name+"</strong>" +" : " +comment.message;
             item.appendChild(commentDiv);
         });
@@ -221,6 +239,7 @@ function populatePhoto(response) {
       itemSelector: '.item',
       columnWidth: 250
     });
+    msnry.layout();
     // layout Masonry again after all images have loaded
     imagesLoaded( container, function() {
 
