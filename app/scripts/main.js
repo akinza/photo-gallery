@@ -1,3 +1,5 @@
+var processing;
+var scrollNext;
 function onLoginSuccess() {
   console.log('Welcome!  Fetching your information.... ');
   $("#fb-login").hide();
@@ -245,18 +247,19 @@ function populatePhoto(response) {
 
       msnry.layout();
       if(_.has(response.paging, "next")){
-        var link = document.createElement("button");
-        link.className = "btn btn-block btn-primary";
-        link.dataset["next"] = response.paging.next;
-        link.innerHTML = "Load more images";
-        var pagingBlock = document.getElementById("pagination");
-        pagingBlock.height = "100";
-        pagingBlock.innerHTML = "";
-        pagingBlock.appendChild(link);
-        $(link).bind("click", function(loadNextPageEvent){
-          var nextLink = loadNextPageEvent.currentTarget.getAttribute("data-next");
-          loadNextPage(nextLink);
-        });
+        scrollNext = response.paging.next;
+        // var link = document.createElement("button");
+        // link.className = "btn btn-block btn-primary";
+        // link.dataset["next"] = response.paging.next;
+        // link.innerHTML = "Load more images";
+        // var pagingBlock = document.getElementById("pagination");
+        // pagingBlock.height = "100";
+        // pagingBlock.innerHTML = "";
+        // pagingBlock.appendChild(link);
+        // $(link).bind("click", function(loadNextPageEvent){
+        //   var nextLink = loadNextPageEvent.currentTarget.getAttribute("data-next");
+        //   loadNextPage(nextLink);
+        // });
       }
     });
 }
@@ -266,6 +269,7 @@ function loadNextPage(next){
     url:next,
     success: function(response){
       populatePhoto(response);
+      processing = false;
     }
   });
 }
@@ -333,5 +337,20 @@ function statusChangeCallback(response) {
 $(document).ready(function(){
   $("#fb-login").unbind().bind("click", function (loginEvent) {
     login();
+  });
+
+  $(document).scroll(function(e){
+
+      if (processing)
+          return false;
+
+      if ($(window).scrollTop() >= ($(document).height() - $(window).height())*0.7){
+          processing = true;
+          loadNextPage(scrollNext);
+          // $.post('/echo/html/', 'html=<div class="loadedcontent">new div</div>', function(data){
+          //     $('#container').append(data);
+          //     processing = false;
+          // });
+      }
   });
 });
