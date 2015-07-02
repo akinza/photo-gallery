@@ -344,7 +344,7 @@ $(document).ready(function(){
       if (processing)
           return false;
 
-      if ($(window).scrollTop() >= ($(document).height() - $(window).height())*0.7){
+      if ($(window).scrollTop() >= ($(document).height() - $(window).height())*0.8){
           processing = true;
           loadNextPage(scrollNext);
           // $.post('/echo/html/', 'html=<div class="loadedcontent">new div</div>', function(data){
