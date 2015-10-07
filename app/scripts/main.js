@@ -1,5 +1,6 @@
 var processing;
 var scrollNext;
+var hasNext = false;
 function onLoginSuccess() {
   console.log('Welcome!  Fetching your information.... ');
   $("#fb-login").hide();
@@ -105,7 +106,7 @@ function getPhotoLikesInfo(id){
     {access_token: access_token},
     function(response){
       if (response && !response.error) {
-        console.log("Likes Info :: <"+id+">", response);
+        // console.log("Likes Info :: <"+id+">", response);
       }
     }
   );
@@ -247,7 +248,9 @@ function populatePhoto(response) {
 
       msnry.layout();
       if(_.has(response.paging, "next")){
+        console.info("pagination :: has next ", response);
         scrollNext = response.paging.next;
+        hasNext = true;
         // var link = document.createElement("button");
         // link.className = "btn btn-block btn-primary";
         // link.dataset["next"] = response.paging.next;
@@ -260,6 +263,10 @@ function populatePhoto(response) {
         //   var nextLink = loadNextPageEvent.currentTarget.getAttribute("data-next");
         //   loadNextPage(nextLink);
         // });
+      }
+      else{
+        scrollNext = "";
+        hasNext=false;
       }
     });
 }
@@ -344,7 +351,7 @@ $(document).ready(function(){
       if (processing)
           return false;
 
-      if ($(window).scrollTop() >= ($(document).height() - $(window).height())*0.8){
+      if (hasNext && $(window).scrollTop() >= ($(document).height() - $(window).height())*0.8){
           processing = true;
           loadNextPage(scrollNext);
           // $.post('/echo/html/', 'html=<div class="loadedcontent">new div</div>', function(data){
