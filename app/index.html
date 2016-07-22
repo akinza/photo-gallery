@@ -1,121 +1,110 @@
 <!doctype html>
 <html class="no-js">
-  <head>
-    <meta charset="utf-8">
-    <title>F8 Photo Gallery</title>
-    <meta name="description" content="">
-    <!-- <meta name="viewport" content="width=device-width"> -->
-    <link rel="shortcut icon" href="/favicon.ico">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(.) styles/vendor.css -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
-    <!-- build:js scripts/vendor/modernizr.js -->
-    <script src="bower_components/modernizr/modernizr.js"></script>
-    <!-- endbuild -->
-  </head>
-  <body>
-    <script>
-      var user_id,access_token;
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId      : '889529114437943',
-          xfbml      : true,
-          version    : 'v2.3'
-        });
-        FB.getLoginStatus(function(response) {
-           statusChangeCallback(response);
-         });
-      };
-      (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "//connect.facebook.net/en_US/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));
-    </script>
-    <!--[if lt IE 10]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-    <header class="header">
-      <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">F8 Photo Gallery</a>
-          </div>
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav pull-right" id="user-nav">
-              <li><a href="#me" id="userProfilePicture"></a></li>
-              <li><a href="#me" id="user_name"></a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
+<head>
+  <meta charset="utf-8">
+  <title>F8 Photo Gallery</title>
+  <meta name="description" content="">
+  <!-- <meta name="viewport" content="width=device-width"> -->
+  <link rel="shortcut icon" href="/favicon.ico">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <!-- build:css(.) styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild -->
+  <!-- build:js scripts/vendor/modernizr.js -->
+  <script src="bower_components/modernizr/modernizr.js"></script>
+
+  <!-- endbuild -->
+</head>
+<body>
+  <script>
+  var user_id,access_token;
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '889529114437943',
+      xfbml      : true,
+      version    : 'v2.3'
+    });
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  };
+  (function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <!--[if lt IE 10]>
+  <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+  <header class="header">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">F8 Photo Gallery</a>
         </div>
-      </nav>
-    </header>
-    <div class="row no-margin">
-      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="fb-login-container">
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav pull-right" id="user-nav">
+            <li><a href="#me" id="userProfilePicture"></a></li>
+            <li><a href="#me" id="user_name"></a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+  </header>
+  <div class="container">
+      <div id="fb-login-container">
         <div class="login-container text-center" id="fb-login"></div>
       </div>
-    </div>
-    <div class="row no-margin">
-      <section class="sidebar  col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <!-- <div class="row  no-margin">
-          <div id="albumListHeading" class="list-group col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin:10px 0 5px 0; display: none;">
-            <a class="list-group-item margin-left-20"><b>Albums</b></a>
-          </div>
-        </div> -->
-        <div class="row no-margin">
-          <div id="album-container" class="list-group col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
-        </div>
-        <div class="row no-margin">
-          <div id="album-pagination" class="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
-        </div>
+
+
+      <section class="content">
+            <div class="btn-group">
+              <button type="button" class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown">Albums<span class="caret"></span></button>
+              <ul id="album-container" class="dropdown-menu scrollable-menu" role="menu">
+                <li id="album-pagination"></li>
+              </ul>
+            </div>
+          <div id="photo-container" class="js-masonry "></div>
+          <div id="pagination" class="" style="padding:25px;"></div>
       </section>
     </div>
-    <div class="row no-margin">
-      <section class="content col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="row no-margin">
-          <div id="photo-container" class="js-masonry col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
-        </div>
-        <div class="row no-margin">
-          <div id="pagination" class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding:25px;"></div>
-        </div>
-      </section>
+  </div>
+  <footer class="footer">
+    <div class="container">
+      <p class="text-center">F8 Photo Gallery &copy; Copyright 2015 | <a href="https://www.fb.com/1745217960" target="_blank">@akinza</a></p>
     </div>
-    <footer class="footer">
-      <div class="container">
-        <p class="text-center">F8 Photo Gallery &copy; Copyright 2015 | <a href="https://www.fb.com/1745217960" target="_blank">@akinza</a></p>
-      </div>
-    </footer>
-    <div class="v-image-container-main" id="imageViewer"></div>
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/web-animations-js/web-animations.min.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-    <script>
-      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-      e.src='//www.google-analytics.com/analytics.js';
-      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-      ga('create','UA-XXXXX-X');ga('send','pageview');
+  </footer>
+  <div class="v-image-container-main" id="imageViewer"></div>
+  <!-- build:js(.) scripts/vendor.js -->
+  <!-- bower:js -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/web-animations-js/web-animations.min.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+  <script>
+  (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+    function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+    e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+    e.src='//www.google-analytics.com/analytics.js';
+    r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+    ga('create','UA-XXXXX-X');ga('send','pageview');
     </script>
     <!-- build:js(.) scripts/plugins.js -->
     <script src="bower_components/bootstrap/js/affix.js"></script>
@@ -138,15 +127,15 @@
     <!-- endbuild -->
     <script type="text/template" id="tpl-album-item">
       <!-- <div class="list-group"> -->
-        <!-- <a href="#" class="list-group-item active">Cras justo odio</a> -->
-        <!-- <a href="#" class="list-group-item">Dapibus ac facilisis in</a> -->
-        <!-- <a href="#" class="list-group-item">Morbi leo risus</a> -->
-        <!-- <a href="#" class="list-group-item">Porta ac consectetur ac</a> -->
-        <a href="#" class="list-group-item" data-id="<%=id%>"><%=name%> (<%=count%>)</a>
+      <!-- <a href="#" class="list-group-item active">Cras justo odio</a> -->
+      <!-- <a href="#" class="list-group-item">Dapibus ac facilisis in</a> -->
+      <!-- <a href="#" class="list-group-item">Morbi leo risus</a> -->
+      <!-- <a href="#" class="list-group-item">Porta ac consectetur ac</a> -->
+      <a href="#" class="list-group-item" data-id="<%=id%>"><%=name%> (<%=count%>)</a>
       <!-- </div> -->
     </script>
     <!-- build:js({app,.tmp}) scripts/main.js -->
     <script src="scripts/main.js"></script>
     <!-- endbuild -->
-</body>
-</html>
+  </body>
+  </html>

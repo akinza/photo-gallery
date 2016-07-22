@@ -142,13 +142,15 @@ function populateAlbums(response){
     if(obj.privacy !== "custom"){
       var button = document.createElement("a");
       // button.className = " btn btn-info pull-left  margin-left-20";
-      button.className = "list-group-item margin-left-20";
+      // button.className = "list-group-item margin-left-20";
 
       button.dataset["id"] = obj.id;
       button.innerHTML = obj.name + "("+obj.count+")";
       button.style.cursor = "pointer";
       var c = document.getElementById('album-container');
-      c.appendChild(button);
+      var li = document.createElement('li');
+      li.appendChild(button);
+      c.appendChild(li);
       $(button).unbind().bind("click", function(loadAlbum){
         var album_id = loadAlbum.currentTarget.getAttribute("data-id");
         getEachAlbum(album_id);
@@ -269,6 +271,7 @@ function populatePhoto(response) {
         hasNext=false;
       }
     });
+      // activateSlimScroll();
 }
 
 function loadNextPage(next){
@@ -344,7 +347,25 @@ function statusChangeCallback(response) {
   }
 }
 
+function activateSlimScroll(){
+  $("#photo-container").slimScroll({
+            height: window.innerHeight+'px',
+            size: '8px',
+            position: 'right',
+            color: '#888',
+            alwaysVisible: false,
+            distance: '3px',
+            railVisible: true,
+            railColor: '#efefef',
+            railOpacity: 0.3,
+            wheelStep: 10,
+            allowPageScroll: true,
+            disableFadeOut: false
+        });
+}
+
 $(document).ready(function(){
+
   $("#fb-login").unbind().bind("click", function (loginEvent) {
     login();
   });
