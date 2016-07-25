@@ -1,6 +1,7 @@
 var processing;
 var scrollNext;
 var hasNext = false;
+var uid, accessToken;
 function onLoginSuccess() {
   console.log('Welcome!  Fetching your information.... ');
   $("#fb-login").hide();
@@ -122,6 +123,8 @@ function login(){
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
+      uid = response.authResponse.userID;
+      accessToken = response.authResponse.accessToken;
       onLoginSuccess();
 
     } else if (response.status === 'not_authorized') {
