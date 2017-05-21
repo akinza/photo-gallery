@@ -94,6 +94,8 @@
   <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/web-animations-js/web-animations.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="bower_components/modernizr/modernizr.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
   <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
@@ -104,37 +106,37 @@
     e.src='//www.google-analytics.com/analytics.js';
     r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
     ga('create','UA-XXXXX-X');ga('send','pageview');
-    </script>
-    <!-- build:js(.) scripts/plugins.js -->
-    <script src="bower_components/bootstrap/js/affix.js"></script>
-    <script src="bower_components/bootstrap/js/alert.js"></script>
-    <script src="bower_components/bootstrap/js/dropdown.js"></script>
-    <script src="bower_components/bootstrap/js/tooltip.js"></script>
-    <script src="bower_components/bootstrap/js/modal.js"></script>
-    <script src="bower_components/bootstrap/js/transition.js"></script>
-    <script src="bower_components/bootstrap/js/button.js"></script>
-    <script src="bower_components/bootstrap/js/popover.js"></script>
-    <script src="bower_components/bootstrap/js/carousel.js"></script>
-    <script src="bower_components/bootstrap/js/scrollspy.js"></script>
-    <script src="bower_components/bootstrap/js/collapse.js"></script>
-    <script src="bower_components/bootstrap/js/tab.js"></script>
+  </script>
+  <!-- build:js(.) scripts/plugins.js -->
+  <script src="bower_components/bootstrap/js/affix.js"></script>
+  <script src="bower_components/bootstrap/js/alert.js"></script>
+  <script src="bower_components/bootstrap/js/dropdown.js"></script>
+  <script src="bower_components/bootstrap/js/tooltip.js"></script>
+  <script src="bower_components/bootstrap/js/modal.js"></script>
+  <script src="bower_components/bootstrap/js/transition.js"></script>
+  <script src="bower_components/bootstrap/js/button.js"></script>
+  <script src="bower_components/bootstrap/js/popover.js"></script>
+  <script src="bower_components/bootstrap/js/carousel.js"></script>
+  <script src="bower_components/bootstrap/js/scrollspy.js"></script>
+  <script src="bower_components/bootstrap/js/collapse.js"></script>
+  <script src="bower_components/bootstrap/js/tab.js"></script>
 
-    <script src="bower_components/masonry/dist/masonry.pkgd.min.js"></script>
-    <script src="bower_components/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="bower_components/masonry/dist/masonry.pkgd.min.js"></script>
+  <script src="bower_components/imagesloaded/imagesloaded.pkgd.min.js"></script>
 
-    <script src="scripts/underscore.js"></script>
-    <!-- endbuild -->
-    <script type="text/template" id="tpl-album-item">
-      <!-- <div class="list-group"> -->
-      <!-- <a href="#" class="list-group-item active">Cras justo odio</a> -->
-      <!-- <a href="#" class="list-group-item">Dapibus ac facilisis in</a> -->
-      <!-- <a href="#" class="list-group-item">Morbi leo risus</a> -->
-      <!-- <a href="#" class="list-group-item">Porta ac consectetur ac</a> -->
-      <a href="#" class="list-group-item" data-id="<%=id%>"><%=name%> (<%=count%>)</a>
-      <!-- </div> -->
-    </script>
-    <!-- build:js({app,.tmp}) scripts/main.js -->
-    <script src="scripts/main.js"></script>
-    <!-- endbuild -->
-  </body>
-  </html>
+  <script src="scripts/underscore.js"></script>
+  <!-- endbuild -->
+  <script type="text/template" id="tpl-album-item">
+    <!-- <div class="list-group"> -->
+    <!-- <a href="#" class="list-group-item active">Cras justo odio</a> -->
+    <!-- <a href="#" class="list-group-item">Dapibus ac facilisis in</a> -->
+    <!-- <a href="#" class="list-group-item">Morbi leo risus</a> -->
+    <!-- <a href="#" class="list-group-item">Porta ac consectetur ac</a> -->
+    <a href="#" class="list-group-item" data-id="<%=id%>"><%=name%> (<%=count%>)</a>
+    <!-- </div> -->
+  </script>
+  <!-- build:js({app,.tmp}) scripts/main.js -->
+  <script src="scripts/main.js"></script>
+  <!-- endbuild -->
+</body>
+</html>
